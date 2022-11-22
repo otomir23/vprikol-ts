@@ -70,7 +70,11 @@ export class VprikolAPI {
                 },
             });
 
-            if (result.success === false && result.error.error_code === 425) continue;
+            if (
+                result.success === false &&
+                'error_code' in result.error &&
+                result.error.error_code === 425
+            ) continue;
 
             return result;
         }
