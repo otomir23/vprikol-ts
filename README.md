@@ -17,7 +17,7 @@ yarn add vprikol-ts
 ## 📚 Example
 
 ```typescript
-import { VprikolAPI } from '../src';
+import { VprikolAPI } from 'vprikol-ts';
 
 // Create an instance of the API
 const api = new VprikolAPI({ token: 'your_token' });
