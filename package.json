@@ -5,7 +5,15 @@
   "main": "dist/index.js",
   "author": "Damir Modyarov",
   "license": "MIT",
+  "repository": "https://github.com/otomir23/vprikol-ts",
   "private": false,
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
   "devDependencies": {
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
