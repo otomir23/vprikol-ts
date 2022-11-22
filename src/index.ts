@@ -62,7 +62,7 @@ export class VprikolAPI {
 
         // eslint-disable-next-line no-constant-condition
         while (true) {
-            const result = await request<FindTaskAPIResponse>('https://api.vprikol.dev/find/getTask', {
+            const result = await request<FindTaskAPIResponse>('https://api.vprikol.dev/find/getTaskResult', {
                 method: 'GET',
                 query: {
                     token: this.token,
