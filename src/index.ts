@@ -9,6 +9,7 @@ import {
 } from './types';
 import { request } from './api';
 
+// noinspection JSUnusedGlobalSymbols
 export class VprikolAPI {
     private readonly token: string;
 

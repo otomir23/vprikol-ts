@@ -14,12 +14,16 @@ export type RequestError = {
 }
 
 export type RequestResponse<R> = {
+    success: boolean;
+    data?: R;
+    error?: RequestError;
+} & {
     success: true;
     data: R;
 } | {
     success: false;
     error: RequestError;
-}
+};
 
 export type MembersAPIResponse = {
     server: string;

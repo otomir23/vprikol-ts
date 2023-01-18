@@ -23,10 +23,20 @@ export async function request<R>(url: string, params: {
         });
 
     if (response.ok) {
-        return {
-            success: true,
-            data: (await response.json()) as R,
-        };
+        try {
+            return {
+                success: true,
+                data: (await response.json()) as R,
+            };
+        } catch (e) {
+            return {
+                success: false,
+                error: {
+                    error_code: 0,
+                    message: 'Invalid response',
+                },
+            };
+        }
     }
 
     return {
