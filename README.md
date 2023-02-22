@@ -42,9 +42,9 @@ api.members(1, 1).then(data => {
 
 ## ⚙️ API
 
-You can get your token here: [Form](https://vprikol.dev/api/get_token)
+You can get your token [here](https://vprikol.dev/forms/get_token/)
 
-You can find the full documentation here: [Swagger UI](https://api.vprikol.dev/docs)
+You can find the full documentation [here](https://docs.vprikol.dev/)
 
 ## ⚖️ License
 
