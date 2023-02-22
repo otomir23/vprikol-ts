@@ -10,6 +10,7 @@ export async function request<R>(url: string, params: {
     query?: Record<string, unknown>;
     headers?: HeadersInit;
     body?: BodyInit;
+    token?: string;
 }): Promise<RequestResponse<R>> {
     const queryString = new URLSearchParams(
         Object.entries(params.query ?? {}).map(([key, value]) => [String(key), String(value)]),
@@ -18,29 +19,30 @@ export async function request<R>(url: string, params: {
     const response =
         await fetch(url + '?' + queryString, {
             method: params.method,
-            headers: params.headers,
+            headers: {
+                ...(params.token && {
+                    'Authorization': `Bearer ${params.token}`,
+                }),
+                ...params.headers,
+            },
             body: params.body,
         });
 
-    if (response.ok) {
-        try {
-            return {
-                success: true,
-                data: (await response.json()) as R,
-            };
-        } catch (e) {
-            return {
-                success: false,
-                error: {
-                    error_code: 0,
-                    message: 'Invalid response',
-                },
-            };
-        }
+    try {
+        return response.ok ? {
+            success: true,
+            data: (await response.json()) as R,
+        } : {
+            success: false,
+            error: (await response.json()) as RequestError,
+        };
+    } catch (e) {
+        return {
+            success: false,
+            error: {
+                error_code: -1,
+                message: `Invalid response with status ${response.status}: ${await response.text()}`,
+            },
+        };
     }
-
-    return {
-        success: false,
-        error: (await response.json()) as RequestError,
-    };
 }

@@ -21,10 +21,10 @@ export class VprikolAPI {
         return request<MembersAPIResponse>('https://api.vprikol.dev/members', {
             method: 'GET',
             query: {
-                token: this.token,
                 fraction_id: fraction,
                 server,
             },
+            token: this.token,
         });
     }
 
@@ -32,18 +32,16 @@ export class VprikolAPI {
         return request<ServerStatusAPIResponse>('https://api.vprikol.dev/status', {
             method: 'GET',
             query: {
-                token: this.token,
                 server,
             },
+            token: this.token,
         });
     }
 
     async allStatus(): Promise<RequestResponse<ServerStatusAPIResponse[]>> {
         return request<ServerStatusAPIResponse[]>('https://api.vprikol.dev/status', {
             method: 'GET',
-            query: {
-                token: this.token,
-            },
+            token: this.token,
         });
     }
 
@@ -51,10 +49,10 @@ export class VprikolAPI {
         const task = await request<CreateFindTaskAPIResponse>('https://api.vprikol.dev/find/createTask', {
             method: 'POST',
             query: {
-                token: this.token,
                 nick: username,
                 server,
             },
+            token: this.token,
         });
 
         if (task.success === false) {
@@ -66,9 +64,9 @@ export class VprikolAPI {
             const result = await request<FindTaskAPIResponse>('https://api.vprikol.dev/find/getTaskResult', {
                 method: 'GET',
                 query: {
-                    token: this.token,
                     request_id: task.data.request_id,
                 },
+                token: this.token,
             });
 
             if (
@@ -85,11 +83,11 @@ export class VprikolAPI {
         return request<RatingAPIResponse>('https://api.vprikol.dev/rating', {
             method: 'GET',
             query: {
-                token: this.token,
                 type,
                 subtype: subtype || undefined,
                 server,
             },
+            token: this.token,
         });
     }
 
@@ -97,9 +95,9 @@ export class VprikolAPI {
         return request<IpAPIResponse>('https://api.vprikol.dev/ip', {
             method: 'GET',
             query: {
-                token: this.token,
                 ip,
             },
+            token: this.token,
         });
     }
 
@@ -107,9 +105,9 @@ export class VprikolAPI {
         return request<CheckRPUsernameAPIResponse>('https://api.vprikol.dev/checkrp', {
             method: 'GET',
             query: {
-                token: this.token,
                 nick: username,
             },
+            token: this.token,
         });
     }
 
@@ -117,10 +115,10 @@ export class VprikolAPI {
         return request<GenerateRPUsernameAPIResponse>('https://api.vprikol.dev/rpnick', {
             method: 'GET',
             query: {
-                token: this.token,
                 gender,
                 nation,
             },
+            token: this.token,
         });
     }
 }
