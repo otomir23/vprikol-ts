@@ -61,6 +61,9 @@ export class VprikolAPI {
 
         // eslint-disable-next-line no-constant-condition
         while (true) {
+            // 1s delay
+            await new Promise(r => setTimeout(r, 1000));
+
             const result = await request<FindTaskAPIResponse>('https://api.vprikol.dev/find/getTaskResult', {
                 method: 'GET',
                 query: {
