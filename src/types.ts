@@ -1,5 +1,6 @@
 export type ApiOptions = {
     token: string;
+    baseUrl?: string;
 };
 
 export type RequestError = {

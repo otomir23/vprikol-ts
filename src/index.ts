@@ -11,14 +11,16 @@ import { request } from './api';
 
 // noinspection JSUnusedGlobalSymbols
 export class VprikolAPI {
+    private readonly baseUrl: string;
     private readonly token: string;
 
-    constructor({ token }: ApiOptions) {
+    constructor({ token, baseUrl }: ApiOptions) {
+        this.baseUrl = baseUrl || 'https://api.vprikol.dev';
         this.token = token;
     }
 
     async members(fraction: number, server: number): Promise<RequestResponse<MembersAPIResponse>> {
-        return request<MembersAPIResponse>('https://api.vprikol.dev/members', {
+        return request<MembersAPIResponse>(this.baseUrl + '/members', {
             method: 'GET',
             query: {
                 fraction_id: fraction,
@@ -29,7 +31,7 @@ export class VprikolAPI {
     }
 
     async serverStatus(server: number): Promise<RequestResponse<ServerStatusAPIResponse>> {
-        return request<ServerStatusAPIResponse>('https://api.vprikol.dev/status', {
+        return request<ServerStatusAPIResponse>(this.baseUrl + '/status', {
             method: 'GET',
             query: {
                 server,
@@ -39,14 +41,14 @@ export class VprikolAPI {
     }
 
     async allStatus(): Promise<RequestResponse<ServerStatusAPIResponse[]>> {
-        return request<ServerStatusAPIResponse[]>('https://api.vprikol.dev/status', {
+        return request<ServerStatusAPIResponse[]>(this.baseUrl + '/status', {
             method: 'GET',
             token: this.token,
         });
     }
 
     async find(username: string, server: number): Promise<RequestResponse<FindTaskAPIResponse>> {
-        const task = await request<CreateFindTaskAPIResponse>('https://api.vprikol.dev/find/createTask', {
+        const task = await request<CreateFindTaskAPIResponse>(this.baseUrl + '/find/createTask', {
             method: 'POST',
             query: {
                 nick: username,
@@ -64,7 +66,7 @@ export class VprikolAPI {
             // 1s delay
             await new Promise(r => setTimeout(r, 1000));
 
-            const result = await request<FindTaskAPIResponse>('https://api.vprikol.dev/find/getTaskResult', {
+            const result = await request<FindTaskAPIResponse>(this.baseUrl + '/find/getTaskResult', {
                 method: 'GET',
                 query: {
                     request_id: task.data.request_id,
@@ -83,7 +85,7 @@ export class VprikolAPI {
     }
 
     async rating(type: 1 | 2 | 3, subtype: null | 1 | 2 | 3, server: number): Promise<RequestResponse<RatingAPIResponse>> {
-        return request<RatingAPIResponse>('https://api.vprikol.dev/rating', {
+        return request<RatingAPIResponse>(this.baseUrl + '/rating', {
             method: 'GET',
             query: {
                 type,
@@ -95,7 +97,7 @@ export class VprikolAPI {
     }
 
     async ip(ip?: string): Promise<RequestResponse<IpAPIResponse>> {
-        return request<IpAPIResponse>('https://api.vprikol.dev/ip', {
+        return request<IpAPIResponse>(this.baseUrl + '/ip', {
             method: 'GET',
             query: {
                 ip,
@@ -105,7 +107,7 @@ export class VprikolAPI {
     }
 
     async checkRPUsername(username: string): Promise<RequestResponse<CheckRPUsernameAPIResponse>> {
-        return request<CheckRPUsernameAPIResponse>('https://api.vprikol.dev/checkrp', {
+        return request<CheckRPUsernameAPIResponse>(this.baseUrl + '/checkrp', {
             method: 'GET',
             query: {
                 nick: username,
@@ -115,7 +117,7 @@ export class VprikolAPI {
     }
 
     async generateRPUsername(gender: RPUsernameGender, nation: RPUsernameNation): Promise<RequestResponse<GenerateRPUsernameAPIResponse>> {
-        return request<GenerateRPUsernameAPIResponse>('https://api.vprikol.dev/rpnick', {
+        return request<GenerateRPUsernameAPIResponse>(this.baseUrl + '/rpnick', {
             method: 'GET',
             query: {
                 gender,
