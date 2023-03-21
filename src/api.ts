@@ -1,9 +1,31 @@
 import { BodyInit, HeadersInit, RequestInfo, RequestInit } from 'node-fetch';
-import { RequestError, RequestResponse } from './types';
 import { dynamicImport } from 'tsimportlib';
 
 const fetchPackage = dynamicImport('node-fetch', module) as Promise<typeof import('node-fetch')>;
 const fetch = (url: RequestInfo, init?: RequestInit) => fetchPackage.then(({ default: f }) => f(url, init));
+
+export type RequestError = {
+    error_code: number;
+    message: string;
+} | {
+    detail: {
+        loc: string[];
+        msg: string;
+        type: string;
+    }[];
+}
+
+export type RequestResponse<R> = {
+    success: boolean;
+    data?: R;
+    error?: RequestError;
+} & {
+    success: true;
+    data: R;
+} | {
+    success: false;
+    error: RequestError;
+};
 
 export async function request<R>(url: string, params: {
     method: 'GET' | 'POST';

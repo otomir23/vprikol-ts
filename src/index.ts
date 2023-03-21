@@ -1,13 +1,16 @@
 import {
-    ApiOptions,
     CreateFindTaskAPIResponse,
     FindTaskAPIResponse, IpAPIResponse,
     MembersAPIResponse, RatingAPIResponse,
-    RequestResponse,
     ServerStatusAPIResponse,
     CheckRPUsernameAPIResponse, RPUsernameGender, RPUsernameNation, GenerateRPUsernameAPIResponse,
-} from './types';
-import { request } from './api';
+} from './schemas';
+import { request, RequestResponse } from './api';
+
+export type ApiOptions = {
+    token: string;
+    baseUrl?: string;
+};
 
 // noinspection JSUnusedGlobalSymbols
 export class VprikolAPI {

@@ -1,31 +1,3 @@
-export type ApiOptions = {
-    token: string;
-    baseUrl?: string;
-};
-
-export type RequestError = {
-    error_code: number;
-    message: string;
-} | {
-    detail: {
-        loc: string[];
-        msg: string;
-        type: string;
-    }[];
-}
-
-export type RequestResponse<R> = {
-    success: boolean;
-    data?: R;
-    error?: RequestError;
-} & {
-    success: true;
-    data: R;
-} | {
-    success: false;
-    error: RequestError;
-};
-
 export type MembersAPIResponse = {
     server: string;
     fractionLabel: string;
