@@ -6,7 +6,7 @@ const fetch = (url: RequestInfo, init?: RequestInit) => fetchPackage.then(({ def
 
 export type RequestError = {
     error_code: number;
-    message: string;
+    detail: string;
 } | {
     detail: {
         loc: string[];
@@ -34,8 +34,16 @@ export async function request<R>(url: string, params: {
     body?: BodyInit;
     token?: string;
 }): Promise<RequestResponse<R>> {
+    const processArg = (k, v) => [String(k), String(v)];
+
     const queryString = new URLSearchParams(
-        Object.entries(params.query ?? {}).map(([key, value]) => [String(key), String(value)]),
+        Object.entries(params.query ?? {})
+            .reduce(
+                (arr, [key, value]) => {
+                    if (!Array.isArray(value)) return [...arr, processArg(key, value)];
+                    return [...arr, ...value.map(v => processArg(key, v))];
+                }, [],
+            ),
     ).toString();
 
     const response =
@@ -63,7 +71,7 @@ export async function request<R>(url: string, params: {
             success: false,
             error: {
                 error_code: -1,
-                message: `Invalid response with status ${response.status}: ${await response.text()}`,
+                detail: `Invalid response with status ${response.status}: ${await response.text()}`,
             },
         };
     }

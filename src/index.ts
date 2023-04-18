@@ -22,12 +22,12 @@ export class VprikolAPI {
         this.token = token;
     }
 
-    async members(fraction: number, server: number): Promise<RequestResponse<MembersAPIResponse>> {
+    async members(fraction: number[], server: number): Promise<RequestResponse<MembersAPIResponse>> {
         return request<MembersAPIResponse>(this.baseUrl + '/members', {
             method: 'GET',
             query: {
                 fraction_id: fraction,
-                server,
+                server_id: server,
             },
             token: this.token,
         });

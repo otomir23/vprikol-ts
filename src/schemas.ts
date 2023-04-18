@@ -1,19 +1,21 @@
 export type MembersAPIResponse = {
-    server: string;
-    fractionLabel: string;
-    players: {
-        [username: string]: {
-            id: number;
-            isOnline: boolean;
-            isLeader: boolean;
-            rank: number;
-            rankLabel: string;
-        }
-    };
-    totalPlayers: number;
-    totalOnline: number;
-    leaderNick: string;
-    isLeaderOnline: boolean;
+    serverName: string;
+    [fractionId: number]: {
+        fractionLabel: string;
+        players: {
+            [username: string]: {
+                id: number;
+                isOnline: boolean;
+                isLeader: boolean;
+                rank: number;
+                rankLabel: string;
+            }
+        };
+        totalPlayers: number;
+        totalOnline: number;
+        leaderNick: string;
+        isLeaderOnline: boolean;
+    }
 }
 
 export type ServerStatusAPIResponse = {
