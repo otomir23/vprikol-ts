@@ -18,7 +18,7 @@ export class VprikolAPI {
     private readonly token: string;
 
     constructor({ token, baseUrl }: ApiOptions) {
-        this.baseUrl = baseUrl || 'https://api.vprikol.dev';
+        this.baseUrl = baseUrl || 'https://api.vprikol.ru';
         this.token = token;
     }
 
